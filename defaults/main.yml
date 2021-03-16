@@ -1,0 +1,5 @@
+---
+# defaults file for ansible-haproxy
+
+haproxy_package_name: haproxy
+haproxy_version: 2.3
