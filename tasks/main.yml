@@ -1,12 +1,22 @@
 # tasks file for ansible-haproxy
 ---
 
-- name: Add HAProxy repository from PPA and install its signing key
-  apt_repository:
-    repo: "{{ haproxy_ppa }}"
-    update_cache: true
+- block:
+  
+    - name: ensure haproxy repository is added from ppa
+      apt_repository:
+        repo: "{{ haproxy_ppa }}"
+        update_cache: true
 
-- name: Install HAProxy
-  apt:
-    name: "{{ haproxy_package_name }}"
-    state: "{{ apt_install_state | default('latest') }}"
+    - name: ensure haproxy is installed
+      apt:
+        name: "{{ item }}"
+        state: present
+        cache_valid_time: "{{ apt_cache_valid_time|default(omit) }}"
+        install_recommends: no
+      with_items:
+        - "{{ haproxy_package_name }}"
+        
+  become: yes
+  tags:
+    - haproxy
