@@ -2,3 +2,5 @@
 # vars file for ansible-haproxy
 
 haproxy_ppa: "ppa:vbernat/haproxy-{{ haproxy_version }}"
+haproxy_packages:
+  - haproxy

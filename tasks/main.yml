@@ -8,6 +8,13 @@
         repo: "{{ haproxy_ppa }}"
         update_cache: true
 
+    - name: ensure software-properties-common is installed
+      apt:
+        name: software-properties-common
+        state: present
+        cache_valid_time: "{{ apt_cache_valid_time|default(omit) }}"
+        install_recommends: no
+
     - name: ensure haproxy is installed
       apt:
         name: "{{ item }}"
